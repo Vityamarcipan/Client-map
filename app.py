@@ -1,7 +1,7 @@
 
 from flask import Flask, render_template, request, redirect, jsonify
 import sqlite3, requests
-
+import os 
 app=Flask(__name__)
 DB='clients.db'
 
@@ -46,4 +46,10 @@ def markers():
     con.close()
     return jsonify([{"name":r[0],"address":r[1],"phone":r[2],"comment":r[3],"lat":r[4],"lon":r[5]} for r in rows])
 
-app.run(debug=True)
+if name == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False
+    )
